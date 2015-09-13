@@ -23,7 +23,7 @@
 	$has_require = 0; 
 	if(isset($_GET['module'])){	
 		$sites = array(
-			array("select", "menu.php"), 
+			array("select", "list.php"), 
 			array("rule", "rule.php"), 
 			array("apply", "apply.php"), 
 			array("list", "list.php"), 
