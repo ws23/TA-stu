@@ -29,7 +29,6 @@
 			array("list", "list.php"), 
 			array("diary", "diaryform.php"), 
 			array("showD", "printDiary.php"), 
-			array("print", "printable.php"), 
 			array("showA", "printApply.php"), 
 		);
 		foreach ($sites as $site){
