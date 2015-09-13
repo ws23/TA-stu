@@ -2,19 +2,87 @@ body {
 	margin-top: 100px; 
 }
 
-@media screen and (min-width: 700px) {
+.table > tbody > tr > td {
+	vertical-align: middle;
+}
+
+
+
+@media screen and (min-width: 400px) {
 	.login {
 		position: relative; 
 		left: 50%; 
 		margin-left: -200px; 
 	}
+}
 
+@media screen and (min-width: 700px) {
+	.diary {
+		position: relative; 
+		left: 50%; 
+		margin-left: -350px; 
+	}
+}
+
+.twotimes {
+	height: 60px; 
 }
 
 .login {
 	max-width: 400px; 
 }
 
+.diary {
+	max-width: 700px;
+}
+
+.diary {
+
+}
+
+.diary-form {
+
+}
+
+.diary-heading h2, h3{
+	margin-top: 5px; 
+	margin-bottom: 2px; 
+}
+
+.diary-date {
+	
+}
+
+.diary-table > thead > tr > th, 
+.diary-table > tbody > tr > th, 
+.diary-table > tfoot > tr > th, 
+.diary-table > thead > tr > td, 
+.diary-table > tbody > tr > td, 
+.diary-table > tfoot > tr > td {
+	border-color: #333; 
+}
+
+.diary-table table {
+	border-style: solid; 
+	border-width: 2px; 
+	border-color: #333;
+	border-color: black; 
+}
+
+.diary-table td, th, tr{
+	border-style: solid; 
+	border-width: 1px; 
+	border-color: #000000;
+	height: 40px; 
+}
+
+.top {
+	border-color: #000000; 
+}
+
+.printable {
+	margin-top: 0px; 
+}
 
 .footer {
 	text-align: center;
