@@ -28,8 +28,9 @@
 			array("apply", "apply.php"), 
 			array("list", "list.php"), 
 			array("diary", "diaryform.php"), 
-			array("show", "print.php"), 
-			array("print", "printable.php")
+			array("showD", "printDiary.php"), 
+			array("print", "printable.php"), 
+			array("showA", "printApply.php"), 
 		);
 		foreach ($sites as $site){
 			if($_GET['module'] == $site[0]){
