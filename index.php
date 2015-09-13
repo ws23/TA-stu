@@ -15,9 +15,33 @@
 
 </head>
 <body>
-<?php require_once(dirname(__FILE__) . "/lib/header.php"); 
+<?php 
+	require_once(dirname(__FILE__) . "/lib/header.php");
 ?>
-
-<div class="container body">
-	<h2>國立東華大學 通識教育中心 TA系統</h2>
-<?php require_once(dirname(__FILE__) . "/lib/footer.php"); ?>
+<div class="body container">
+<?php
+	$has_require = 0; 
+	if(isset($_GET['module'])){	
+		$sites = array(
+			array("select", "menu.php"), 
+			array("rule", "rule.php"), 
+			array("apply", "apply.php"), 
+			array("list", "list.php"), 
+			array("diary", "diaryform.php"), 
+			array("show", "print.php"), 
+			array("print", "printable.php")
+		);
+		foreach ($sites as $site){
+			if($_GET['module'] == $site[0]){
+				require_once(dirname(__FILE__) . "/" . $site[1]); 
+				$has_require = 1; 
+			}
+		}
+	}
+	if($has_require == 0)
+		require_once(dirname(__FILE__) . "/login.php"); 
+?>
+</div>
+<?php
+	require_once(dirname(__FILE__) . "/lib/footer.php"); 
+?>
