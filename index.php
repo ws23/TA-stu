@@ -33,8 +33,12 @@
 		);
 		foreach ($sites as $site){
 			if($_GET['module'] == $site[0]){
-				require_once(dirname(__FILE__) . "/" . $site[1]); 
-				$has_require = 1; 
+				if(isset($_SESSION['loginID']) && isset($_SESSION['loginToken'])){
+					if(checkExist($DBmain, $_SESSION['loginID'], $_SESSION['loginToken'])){
+						require_once(dirname(__FILE__) . "/" . $site[1]); 
+						$has_require = 1; 
+					}
+				}
 			}
 		}
 	}
