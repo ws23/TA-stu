@@ -53,6 +53,26 @@ function setLogin($DBlink, $user){
 	}
 }
 
+/* Calculate what month is */
+function getMonth(){
+	$month = date("m", time()); 
+	return intval($month); 
+} 
+
+/* Calculate what semester is */
+function getSemester(){
+	$tmp = date("Y-m", time()); 
+	$year = intval(substr($tmp, 0, 4)); 
+	$month = intval(substr($tmp, 5, 2)); 
+	if($month >= 8 && $month <= 12)
+		$sem = ($year-1911) . "-1"; 
+	else if($month==1)
+		$sem = ($year-1911-1) . "-1"; 
+	else
+		$sem = ($year-1911-1) . "-2";
+	return $sem; 
+}
+
 /* Check user Exist or not */
 function checkExist($DBlink, $user, $token){
 	$result = $DBlink->query("SELECT * FROM `login` WHERE `user` = '{$user}' && `token` = '{$token}'; "); 
