@@ -1,0 +1,27 @@
+body {
+	margin-top: 100px; 
+}
+
+@media screen and (min-width: 700px) {
+	.login {
+		position: relative; 
+		left: 50%; 
+		margin-left: -200px; 
+	}
+
+}
+
+.login {
+	max-width: 400px; 
+}
+
+
+.footer {
+	text-align: center;
+	margin-top: 50px;
+}
+
+.footer hr {
+	max-width: 1100px; 
+}
+
