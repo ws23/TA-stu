@@ -53,6 +53,42 @@ function setLogin($DBlink, $user){
 	}
 }
 
+/* Check user Exist or not */
+function checkExist($DBlink, $user, $token){
+	$result = $DBlink->query("SELECT * FROM `login` WHERE `user` = '{$user}' && `token` = '{$token}'; "); 
+	if($result->num_rows<=0)
+		return false; 
+	return true; 
+}
+
+/* FixZero */
+
+function fixZero($val, $amount){
+	$zero = $amount - strlen(strval($val)); 
+	$str = ""; 
+	for($i=0; $i<$zero; $i++)
+		$str .= "0"; 
+	$str .= strval($val); 
+	return $str; 
+}
+
+/* Generate token */
+function genToken($DBlink, $user){
+	list($usec, $sec) = explode(' ', microtime()); 
+	$seed = (float)$sec + ((float)$usec*100000); 
+	srand($seed); 
+	
+	$str = fixZero(rand(0, 99999999), 8); 
+	$str .= $user; 
+	$str .= getIP(); 
+	
+	$token = md5($str);
+	
+	$query = "UPDATE `login` SET `token` = '{$token}' WHERE `user` = '{$user}'"; 
+	$DBlink->query($query); 
+	return $token; 
+}
+
 /* POP3 Auth */
 function CheckPOP3($server, $user, $pwd, $port = 110){
     //若任一欄位為空白則無效
