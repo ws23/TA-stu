@@ -7,7 +7,7 @@
 	$result = $DBmain->query($query); 
 	if($result->num_rows>0){
 ?>
-<table class="table table-hover">
+<table class="table table-hover table-bordered">
 	<tr>
 		<th>課程代碼</th><th>課程名稱</th><th>本月</th><th>過去</th>
 	</tr>
@@ -17,7 +17,7 @@
 	<tr class="<?php echo $resultofdiary->num_rows>0? 'success':'danger'; ?>"> 
 		<td class="col-xs-2"><?php echo $subj['courseCode']; ?></td>
 		<td class="col-xs-3"><?php echo $subj['courseName']; ?></td>
-		<td class="col-xs-1"><?php echo "<a href=\"index.php?module="; echo $resultofdiary->num_rows>0? "diary":"showD"; echo "&id={$subj['id']}&month={$month}\">{$month}月</a>"; ?></td>
+		<td class="col-xs-1"><?php echo "<a href=\"index.php?module="; echo $resultofdiary->num_rows>0? "showD":"diary"; echo "&id={$subj['id']}&month={$month}\">{$month}月</a>"; ?></td>
 		<td class="col-xs-6"><?php
 			$othermonth = $DBmain->query("SELECT * FROM `diary` WHERE `TAid` = {$subj['id']} AND `month` != '{$month}' ORDER BY `id`; "); 
 			while($m = $othermonth->fetch_array(MYSQLI_BOTH)){ ?>
