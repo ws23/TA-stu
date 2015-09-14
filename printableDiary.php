@@ -41,7 +41,7 @@
 	
 	if($info['stuID']==$_SESSION['loginID'] || isset($_SESSION['admin'])) {
 
-	$records = $DBmain->query("SELECT * FROM `diary_record` WHERE `diaryID` = {$row['id']}; "); 
+	$records = $DBmain->query("SELECT * FROM `diary_record` WHERE `diaryID` = {$row['id']} ORDER BY `date`, `fromTime`, `toTime`; "); 
 ?>
 
 <div class="diary">

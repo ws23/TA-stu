@@ -35,7 +35,7 @@
 
 <div class="diary-record">
 <form method="post" action="index.php?module=showD&id=<?php echo $id; ?>&month=<?php echo $month; ?>">
-	<input type="hidden" value="<?php echo $_SESSION['loginToken']; ?>">
+	<input type="hidden" name="flag" value="<?php echo $_SESSION['loginToken']; ?>">
     <h4 colspan="3" class="text-center"><?php echo $month; ?>月 工作內容與執行情況（摘要）</h4>
         <table class="table table-bordered table-hover">
             <tr>
@@ -62,7 +62,7 @@
 						$day = -1; 
 					}
 					?>
-					<select name="rec_date" class="form-control">
+					<select name="rec_date[]" class="form-control">
 						<option value="0"> </option>
 					<?php
 						for($j=1; $j<=31; $j++){
@@ -70,7 +70,7 @@
 								break;
 							else if(($month==4||$month==6||$month==9||$month==11) && $j==31)
 								break; ?>
-							<option value="<?php echo $j; ?>"<?php echo $day==$j? " selected":""; ?>><?php echo $yearmonth . "-" . (fixZero($j, 2)); ?></option>
+							<option value="<?php echo $yearmonth . "-" . (fixZero($j, 2)); ?>"<?php echo $day==$j? " selected":""; ?>><?php echo $yearmonth . "-" . (fixZero($j, 2)); ?></option>
 				<?php	}
 					?>
 				</td>
@@ -84,40 +84,38 @@
 				?>
 				<div class="form-inline">
 				<div class="form-group">
-					<select name="rec_from_hr" class="form-control">
+					<select name="rec_from_hr[]" class="form-control">
 						<option value="-1"> </option>
 					<?php
 						for($j=0; $j<24; $j++){ ?>
-						<option value="<?php echo $j; ?>"<?php echo $rec!=false? ($fromHour==$j? " selected":"") :""; ?>><?php echo (fixZero($j, 2)); ?></option>
+						<option value="<?php echo fixZero($j, 2); ?>"<?php echo $rec!=false? ($fromHour==$j? " selected":"") :""; ?>><?php echo (fixZero($j, 2)); ?></option>
 				<?php	}
 					?>
 					</select>
 					<label>:</label>
-					<select name="rec_from_min" class="form-control">
-                        <option value="-1"> </option>
+					<select name="rec_from_min[]" class="form-control">
                     <?php
                         for($j=0; $j<60; $j+=5){ ?>
-                        <option value="<?php echo $j; ?>"<?php echo $rec!=false? ($fromMin==$j? " selected":"") :""; ?>><?php echo (fixZero($j, 2)); ?></option>
+                        <option value="<?php echo fixZero($j, 2); ?>"<?php echo $rec!=false? ($fromMin==$j? " selected":"") :""; ?>><?php echo (fixZero($j, 2)); ?></option>
                 <?php   }   
                     ?>  
 
 					</select>
 					<label> ~ </label>
-					<select name="rec_to_hr" class="form-control">
+					<select name="rec_to_hr[]" class="form-control">
                         <option value="-1"> </option>
                     <?php
                         for($j=0; $j<24; $j++){ ?>
-                        <option value="<?php echo $j; ?>"<?php echo $rec!=false? ($toHour==$j? " selected":"") :""; ?>><?php echo (fixZero($j, 2)); ?></option>
+                        <option value="<?php echo fixZero($j, 2); ?>"<?php echo $rec!=false? ($toHour==$j? " selected":"") :""; ?>><?php echo (fixZero($j, 2)); ?></option>
                 <?php   }   
                     ?>  
 
 					</select>
 					<label>:</label>
-					<select name="rec_to_min" class="form-control">
-                        <option value="-1"> </option>
+					<select name="rec_to_min[]" class="form-control">
                     <?php
                         for($j=0; $j<60; $j+=5){ ?>
-                        <option value="<?php echo $j; ?>"<?php echo $rec!=false? ($toMin==$j? " selected":"") :""; ?>><?php echo (fixZero($j, 2)); ?></option>
+                        <option value="<?php echo fixZero($j, 2); ?>"<?php echo $rec!=false? ($toMin==$j? " selected":"") :""; ?>><?php echo (fixZero($j, 2)); ?></option>
                 <?php   }   
                     ?>  
 
@@ -127,7 +125,7 @@
 				
 				</td>
                 <td class="text-left">
-				<input type="text" class="form-control" value="<?php echo $rec['content']; ?>">
+				<input type="text" class="form-control" name="rec_text[]" value="<?php echo $rec['content']; ?>">
 				</td>
             </tr>
 			<?php } ?>

@@ -19,14 +19,21 @@
 	if(isset($_POST['flag'])){
 		if($_POST['flag']==$_SESSION['loginToken']){
 			$DBmain->query("UPDATE `diary` SET `lastUpdate` = CURRENT_TIMESTAMP WHERE `month` = '{$month}' AND `TAID` = {$id}; "); 
+			$DBmain->query("DELETE FROM `diary_record` WHERE `diaryID` = {$row['id']}; ");
 			
-			$records = $DBmain->query("SELECT * FROM `diary_record` WHERE `diaryID` = {$row['id']}; "); 
-			/* Process POST */
-
+			for($i=0; $i<10; $i++){
+				if($_POST['rec_date'][$i]=='0' || $_POST['rec_from_hr'][$i]=='-1' || $_POST['rec_to_hr'][$i]=='-1')
+					continue; 
+				$date = trim(mysqli_real_escape_string($DBmain, $_POST['rec_date'][$i])); 
+				$from = fixZero(trim(mysqli_real_escape_string($DBmain, $_POST['rec_from_hr'][$i])), 2) . ":" . fixZero(trim(mysqli_real_escape_string($DBmain, $_POST['rec_from_min'][$i])), 2) . ":00"; 
+				$to = fixZero(trim(mysqli_real_escape_string($DBmain, $_POST['rec_to_hr'][$i])), 2) . ":" . fixZero(trim(mysqli_real_escape_string($DBmain, $_POST['rec_to_min'][$i])), 2) . ":00";
+				$content = trim(mysqli_real_escape_string($DBmain, $_POST['rec_text'][$i]));
+				$DBmain->query("INSERT INTO `diary_record` (`diaryID`, `date`, `fromTime`, `toTime`, `content`) VALUES ({$row['id']}, '{$date}', '{$from}', '{$to}', '{$content}'); ");
+			}
+			locate($URLPv . "index.php?module=showD&month={$month}&id={$id}"); 
 		}
 	}
-
-	$records = $DBmain->query("SELECT * FROM `diary_record` WHERE `diaryID` = {$row['id']}; "); 
+	$records = $DBmain->query("SELECT * FROM `diary_record` WHERE `diaryID` = {$row['id']} ORDER BY `date`, `fromTime`, `toTime`; "); 
 ?>
 
 <div class="diary">
