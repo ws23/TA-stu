@@ -38,6 +38,10 @@
 						require_once(dirname(__FILE__) . "/" . $site[1]); 
 						$has_require = 1; 
 					}
+			    	else if(isset($_SESSION['admin']) && isset($_SESSION['loginToken'])){
+        				require_once(dirname(__FILE__) . "/" . $site[1]); 
+						$has_require = 1; 
+					} 
 				}
 			}
 		}

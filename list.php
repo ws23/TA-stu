@@ -1,8 +1,50 @@
 <?php 
 	$semester = getSemester(); 
 	$month = getMonth(); 
-	if(strval(date("d",time()))>20)
-		$month = -1; 
+	if(strval(date("d",time()))>$deadline)
+		$month = -1;
+
+
+	if(isset($_SESSION['admin'])){
+		if(isset($_POST['ident'])){
+			$_SESSION['loginID'] = trim(mysqli_real_escape_string($DBmain, $_POST['ident'])); 
+		}
+?>
+	<h2>請選擇您想要檢視的月誌所屬之TA姓名</h2>
+	<form action="index.php?module=select" method="post">
+	<select name="ident" class="form-control">
+<?php
+		$result = $DBmain->query("SELECT * FROM `list_TA` LEFT JOIN `list_course` ON `list_course`.`code` = `list_TA`.`courseCode` WHERE `list_TA`.`semester` = '{$semester}' AND `list_course`.`semester` = '{$semester}' ORDER BY `list_TA`.`stuID`, `list_course`.`code`; "); 
+		if($result->num_rows>0){
+			$front = ''; 
+			while($row = $result->fetch_array(MYSQLI_BOTH)){
+				if($row['stuID']!=$front){
+					if($front != ''){
+						echo '</option>'; 
+					} ?>
+		<option <?php echo $row['stuID'] == $_SESSION['loginID']? "selected ":""; ?>value="<?php echo $row['stuID']; ?>"><?php echo $row['stuID'] . " " . $row['name'] . " : " . $row['courseName'] . "/" . $row['teacher']; ?>
+<?php
+				}
+				else {
+					echo "、" . $row['courseName'] . "/" . $row['teacher']; 
+				}
+				$front = $row['stuID']; 
+			}
+		}
+?>
+	</select>
+	<input type="submit" value="選擇" class="btn btn-info">
+	</form>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+<?php
+	}
+
 	$query = "SELECT * FROM `list_TA` LEFT JOIN `list_course` ON `list_course`.`code` = `list_TA`.`courseCode` WHERE `list_TA`.`semester` = '{$semester}' AND `list_course`.`semester` = '{$semester}' AND `list_TA`.`stuID` = '{$_SESSION['loginID']}';"; 
 	$result = $DBmain->query($query); 
 	if($result->num_rows>0){

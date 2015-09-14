@@ -9,8 +9,9 @@
 	
 
 	if($info['stuID']==$_SESSION['loginID'] || isset($_SESSION['admin'])) {
-		if($month != getMonth())
-	        locate($URLPv . "index.php?module=showD&id={$id}&month={$month}");
+		if($_SESSION['admin'] != $_SESSION['loginID'] || $month != getMonth())
+			locate($URLPv . "index.php?module=showD&id={$id}&month={$month}");
+		else {
 		$result = $DBmain->query("SELECT * FROM `diary` WHERE `TAID` = {$id} AND `month` = '{$month}'; ");
 		if($result->num_rows<=0)
 			$DBmain->query("INSERT INTO `diary` (`semester`, `month`, `TAID`) VALUES('{$semester}', '{$month}', {$id}); ");  
@@ -134,7 +135,9 @@
 </form>
 
 </div>
-<?php }
+<?php 
+	}
+}
 else{
 	setlog($DBmain, "warning", "Try to get diary that dont have auth. ", $_SESSION['loginID']); 
 	locate($URLPv . "index.php"); 

@@ -7,6 +7,10 @@
 			setLog($DBmain, "info", "Log out", $_SESSION['stuID']); 
 			session_destroy(); 
 		}
+		else if(isset($_SESSION['admin']) && isset($_SESSION['loginToken'])){
+            setLog($DBmain, "info", "Log out", $_SESSION['stuID']); 
+            session_destroy(); 
+		}
 		else
 			setLog($DBmain, "warning", "login ID or Token Error. ", $_SESSION['loginID']); 
 	}

@@ -12,7 +12,7 @@
 	if($info['stuID']==$_SESSION['loginID'] || isset($_SESSION['admin'])) {
 	
 	$result = $DBmain->query("SELECT * FROM `diary` WHERE `TAID` = {$id} AND `month` = '{$month}'; ");
-	if($result->num_rows<=0)
+	if($result->num_rows<=0 && !isset($_SESSION['admin']))
 		locate($URLPV . "index.php?module=diary&id={$id}&month={$month}");
 	$row = $result->fetch_array(MYSQLI_BOTH);
 
@@ -55,6 +55,7 @@
 		</p>
 	</div>
 	<div class="diary-form">
+	<?php if($records){ ?>
 	<h4 colspan="3" class="text-center"><?php echo $month; ?>月 工作內容與執行情況（摘要）</h4>
 		<table class="diary-table table">
 			<tr>
@@ -87,7 +88,7 @@
 	</div>
 	<ul>
 		<li>請確實做好每月工作紀錄，並以條列式敘述該月工作狀況。</li>
-		<li>煩請助教於每月 30 日前填寫完畢，並請老師簽名後，將本工作月誌繳交至通識教育中心。</li>
+		<li>煩請助教於每月 <?php echo $deadline; ?> 日前填寫完畢，並請老師簽名後，將本工作月誌繳交至通識教育中心。</li>
 	</ul>
 </div>
 
@@ -100,7 +101,7 @@
     <a class="print-btn" href="<?php echo $URLPv; ?>printableDiary.php?id=<?php echo $id; ?>&month=<?php echo $month; ?>"><button class="btn btn-success">確認，列印申請表</button></a>
 </p>
 
-<?php }
+<?php } }
 else
 	setlog($DBmain, "warning", "Try to get diary that dont have auth. ", $_SESSION['loginID']); 
 ?>
