@@ -6,5 +6,7 @@
     $folderRoot = "/TA/stu/";
     $URLPv = "//{$HOST}{$folderRoot}";
 
+	// argument
+	$deadline = 30; 
 ?>
 
