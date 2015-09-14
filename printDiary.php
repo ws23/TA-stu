@@ -1,12 +1,30 @@
 <?php 
+
+	require_once(dirname(__FILE__) . "/list.php"); 
+
 	$month = trim(mysqli_real_escape_string($DBmain, $_GET['month'])); 
 	$id = trim(mysqli_real_escape_string($DBmain, $_GET['id'])); 
 	$semester = getSemester(); 
 
 	$infos = $DBmain->query("SELECT `list_TA`.`stuID`, `list_TA`.`name`, `list_TA`.`courseCode`, `list_course`.`courseName`, `list_course`.`teacher`  FROM `list_TA` LEFT JOIN `list_course` ON `list_TA`.`courseCode` = `list_course`.`code` WHERE `list_TA`.`id` = {$id} AND `list_TA`.`semester` = '{$semester}' AND `list_course`.`semester` = '{$semester}'; "); 
-	$result = $DBmain->query("SELECT * FROM `diary` WHERE `TAID` = {$id} AND `month` = '{$month}'; "); 
-	$row = $result->fetch_array(MYSQLI_BOTH);
 	$info = $infos->fetch_array(MYSQLI_BOTH); 
+
+	if($info['stuID']==$_SESSION['loginID'] || isset($_SESSION['admin'])) {
+	
+	$result = $DBmain->query("SELECT * FROM `diary` WHERE `TAID` = {$id} AND `month` = '{$month}'; ");
+	if($result->num_rows<=0)
+		locate($URLPV . "index.php?module=diary&id={$id}&month={$month}");
+	$row = $result->fetch_array(MYSQLI_BOTH);
+
+	if(isset($_POST['flag'])){
+		if($_POST['flag']==$_SESSION['loginToken']){
+			$DBmain->query("UPDATE `diary` SET `lastUpdate` = CURRENT_TIMESTAMP WHERE `month` = '{$month}' AND `TAID` = {$id}; "); 
+			
+			$records = $DBmain->query("SELECT * FROM `diary_record` WHERE `diaryID` = {$row['id']}; "); 
+			/* Process POST */
+
+		}
+	}
 
 	$records = $DBmain->query("SELECT * FROM `diary_record` WHERE `diaryID` = {$row['id']}; "); 
 ?>
@@ -62,11 +80,20 @@
 	</div>
 	<ul>
 		<li>請確實做好每月工作紀錄，並以條列式敘述該月工作狀況。</li>
-		<li>煩請助教於每月 20 日前填寫完畢，並請老師簽名後，將本工作月誌繳交至通識教育中心。</li>
+		<li>煩請助教於每月 30 日前填寫完畢，並請老師簽名後，將本工作月誌繳交至通識教育中心。</li>
 	</ul>
 </div>
 
 <p class="text-center">
+	<?php
+	if ($month == getMonth()){ ?>
 	<a class="print-btn" href="<?php echo $URLPv; ?>index.php?module=diary&id=<?php echo $id; ?>&month=<?php echo $month; ?>"><button class="btn btn-danger">返回修改資料</button></a>
+<?php	}
+	?>
     <a class="print-btn" href="<?php echo $URLPv; ?>printableDiary.php?id=<?php echo $id; ?>&month=<?php echo $month; ?>"><button class="btn btn-success">確認，列印申請表</button></a>
 </p>
+
+<?php }
+else
+	setlog($DBmain, "warning", "Try to get diary that dont have auth. ", $_SESSION['loginID']); 
+?>

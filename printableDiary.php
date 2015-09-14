@@ -38,6 +38,8 @@
 	$row = $result->fetch_array(MYSQLI_BOTH);
 	$DBmain->query("UPDATE `diary` SET `printTimes` = " . ($row['printTimes']+1) . ", `lastPrint` = CURRENT_TIMESTAMP WHERE `id` = {$row['id']}; "); 
 	$info = $infos->fetch_array(MYSQLI_BOTH); 
+	
+	if($info['stuID']==$_SESSION['loginID'] || isset($_SESSION['admin'])) {
 
 	$records = $DBmain->query("SELECT * FROM `diary_record` WHERE `diaryID` = {$row['id']}; "); 
 ?>
@@ -95,11 +97,13 @@
 	</div>
 	<ul>
 		<li>請確實做好每月工作紀錄，並以條列式敘述該月工作狀況。</li>
-		<li>煩請助教於每月 20 日前填寫完畢，並請老師簽名後，將本工作月誌繳交至通識教育中心。</li>
+		<li>煩請助教於每月 30 日前填寫完畢，並請老師簽名後，將本工作月誌繳交至通識教育中心。</li>
 	</ul>
 </div>
 
-<?php }
+<?php 
+}
+}
 }
 else
 	locate($URLPv . "index.php"); 
