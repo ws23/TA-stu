@@ -11,9 +11,9 @@
 
 	if($info['stuID']==$_SESSION['loginID'] || isset($_SESSION['admin'])) {
 	
-	$result = $DBmain->query("SELECT * FROM `diary` WHERE `TAID` = {$id} AND `month` = '{$month}'; ");
+	$result = $DBmain->query("SELECT * FROM `diary` WHERE `TAID` = {$id} AND `month` = {$month}; ");
 	if($result->num_rows<=0 && !isset($_SESSION['admin']))
-		locate($URLPV . "index.php?module=diary&id={$id}&month={$month}");
+		locate($URLPv . "index.php?module=diary&id={$id}&month={$month}");
 	$row = $result->fetch_array(MYSQLI_BOTH);
 
 	if(isset($_POST['flag'])){

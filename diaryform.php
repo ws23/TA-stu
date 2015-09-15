@@ -9,8 +9,12 @@
 	
 
 	if($info['stuID']==$_SESSION['loginID'] || isset($_SESSION['admin'])) {
-		if($_SESSION['admin'] != $_SESSION['loginID'] || $month != getMonth())
+		if($month != getMonth())
 			locate($URLPv . "index.php?module=showD&id={$id}&month={$month}");
+		else if(isset($_SESSION['admin'])){
+			if($_SESSION['admin']!= $_SESSION['loginID'])
+				locate($URLPv . "index.php?module=showD&id={$id}&month={$month}");
+		}
 		else {
 		$result = $DBmain->query("SELECT * FROM `diary` WHERE `TAID` = {$id} AND `month` = '{$month}'; ");
 		if($result->num_rows<=0)

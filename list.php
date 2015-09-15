@@ -63,7 +63,7 @@
 		<td class="col-xs-6"><?php
 			$othermonth = $DBmain->query("SELECT * FROM `diary` WHERE `TAid` = {$subj['id']} AND `month` != '{$month}' ORDER BY `id`; "); 
 			while($m = $othermonth->fetch_array(MYSQLI_BOTH)){ ?>
-			<a href="index.php?module=showD&id=<?php echo $m['id']; ?>&month=<?php echo $m['month']; ?>"><?php echo $m['month']; ?>月 </a>	
+			<a href="index.php?module=showD&id=<?php echo $subj['id']; ?>&month=<?php echo $m['month']; ?>"><?php echo $m['month']; ?>月 </a>	
 	<?php	}
 		?></td>
 	</tr>
