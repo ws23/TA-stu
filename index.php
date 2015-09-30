@@ -47,7 +47,7 @@
 		}
 	}
 	if($has_require == 0){
-		session_destroy(); 
+		//session_destroy(); 
 		require_once(dirname(__FILE__) . "/login.php"); 
 	}
 ?>
